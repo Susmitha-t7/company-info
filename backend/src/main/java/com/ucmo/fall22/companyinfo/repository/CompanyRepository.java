@@ -10,4 +10,7 @@ public interface CompanyRepository extends MongoRepository<Company, String> {
 
     Optional<Company> findCompanyByName(String name);
     List<Company> findAllByOrderByNumberOfEmployeesDesc();
-}
+
+    Optional<Company> findById(String Id);
+
+ }
