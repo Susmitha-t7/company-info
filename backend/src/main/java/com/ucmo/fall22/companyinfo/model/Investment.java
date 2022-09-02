@@ -2,9 +2,9 @@ package com.ucmo.fall22.companyinfo.model;
 
 public class Investment {
 
-    private CompanyDepend company;
+    private NameDepend company;
 
-    private CompanyDepend financialOrg;
+    private NameDepend financialOrg;
 
-    private CompanyDepend person;
+    private NameDepend person;
 }

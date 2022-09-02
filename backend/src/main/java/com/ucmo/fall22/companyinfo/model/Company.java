@@ -14,9 +14,8 @@ public class Company {
     @Id
     private String id;
 
-    private String name;
-
     private String permalink;
+    private String name;
 
     @Field("crunchbase_url")
     private String crunchbaseUrl;
@@ -32,12 +31,14 @@ public class Company {
 
     @Field("twitter_username")
     private String twitterUsername;
-
     @Field("category_code")
     private String categoryCode;
 
     @Field("number_of_employees")
     private Integer numberOfEmployees;
+
+    @Field("total_money_raised")
+    private String totalMoneyRaised;
 
     @Field("founded_year")
     private Integer foundedYear;
@@ -50,8 +51,9 @@ public class Company {
 
     @Field("tag_list")
     private String tagList;
+    private String description;
 
-    private List<String> tags;
+    private String overview;
 
     @Field("email_address")
     private String emailAddress;
@@ -59,29 +61,25 @@ public class Company {
     @Field("phone_number")
     private String phoneNumber;
 
-    @Field("description")
-    private String description;
+    @Field(value = "products")
+    private List<NameDepend> products;
 
-    @Field("overview")
-    private String overview;
+    public Company(String name,
+                   String permalink,
+                   String categoryCode,
+                   Integer numberOfEmployees,
+                   String totalMoneyRaised,
+                   Integer foundedYear,
+                   String emailAddress,
+                   String phoneNumber) {
 
-    private List<CompanyDepend> products;
-
-    private List<Relationship> relationships;
-
-    private List<CompanyDepend> competitions;
-
-    @Field("total_money_raised")
-    private String totalMoneyRaised;
-
-    private List<FundingRound> fundingRounds;
-
-    private List<FundingRound> investments;
-
-    private Acquisition acquisition;
-
-    private List<Acquisition> acquisitions;
-
-    private List<Office> offices;
-
+        this.name = name;
+        this.permalink = permalink;
+        this.categoryCode = categoryCode;
+        this.numberOfEmployees = numberOfEmployees;
+        this.totalMoneyRaised = totalMoneyRaised;
+        this.foundedYear = foundedYear;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+    }
 }

@@ -10,68 +10,14 @@ import java.util.List;
 @Data
 public class CompanyDetail {
 
-    @Id
-    private String id;
-
-    private String name;
-
-    private String permalink;
-
-    @Field("crunchbase_url")
-    private String crunchbaseUrl;
-
-    @Field("homepage_url")
-    private String homepageUrl;
-
-    @Field("blog_url")
-    private String blogUrl;
-
-    @Field("blog_feed_url")
-    private String blogFeedUrl;
-
-    @Field("twitter_username")
-    private String twitterUsername;
-
-    @Field("category_code")
-    private String categoryCode;
-
-    @Field("number_of_employees")
-    private Integer numberOfEmployees;
-
-    @Field("founded_year")
-    private Integer foundedYear;
-
-    @Field("founded_month")
-    private Integer foundedMonth;
-
-    @Field("founded_day")
-    private Integer foundedDay;
-
-    @Field("tag_list")
-    private String tagList;
 
     private List<String> tags;
 
-    @Field("email_address")
-    private String emailAddress;
-
-    @Field("phone_number")
-    private String phoneNumber;
-
-    @Field("description")
-    private String description;
-
-    @Field("overview")
-    private String overview;
-
-    private List<CompanyDepend> products;
+    private List<NameDepend> products;
 
     private List<Relationship> relationships;
 
-    private List<CompanyDepend> competitions;
-
-    @Field("total_money_raised")
-    private String totalMoneyRaised;
+    private List<NameDepend> competitions;
 
     private List<FundingRound> fundingRounds;
 
@@ -84,3 +30,26 @@ public class CompanyDetail {
     private List<Office> offices;
 
 }
+
+
+/*
+{
+   name: "Name",
+   lastName: "Last Name",
+   attributes: {
+      age: 25
+      eye: {
+         color: "RED",
+         size: "BIG"
+      }
+   }
+}
+
+@Query(value = "{'attributes.eye.color' : ?0}")
+List<User> findAllByAttributesEyeColor(String color);
+
+// It will return the users with only name and last name
+@Query(value = "{'attributes.age' : ?0}", fields = "{ name : 1, lastName : 1 }")
+List<User> findAllByAttributesAge(int age);
+
+ */
