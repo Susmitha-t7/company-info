@@ -49,4 +49,54 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
         return mongoTemplate.find(searchQuery, Company.class);
     }
 
+    @Override
+    public List<Company> findAllCompaniesByFilter(String search,
+                                                  String categoryCode,
+                                                  String investedOn,
+                                                  String tag,
+                                                  String fundedBy,
+                                                  String numberOfEmployees,
+                                                  String foundedYear) {
+
+
+
+        Query query = new Query();
+        final List<Criteria> criteria = new ArrayList<>();
+
+        if(search !=null && !search.isEmpty() && !search.equals("undefined"))  criteria.add(Criteria.where("name").regex(search));
+        if(categoryCode !=null && !categoryCode.isEmpty() && !categoryCode.equals("undefined"))  criteria.add(Criteria.where("category_code").is(categoryCode));
+        if(investedOn !=null && !investedOn.isEmpty() && !investedOn.equals("undefined"))  criteria.add(Criteria.where("investments.funding_round.company.name").is(investedOn));
+        if(tag !=null && !tag.isEmpty() && !tag.equals("undefined"))  criteria.add(Criteria.where("tag_list").regex(tag));
+        if(fundedBy !=null && !fundedBy.isEmpty() && !fundedBy.equals("undefined"))  criteria.add(Criteria.where("funding_rounds.investments.company.name").is(fundedBy));
+        if(numberOfEmployees !=null && !numberOfEmployees.isEmpty() && !numberOfEmployees.equals("undefined")){
+            int numberOfEmpFrom = 0, numberOfEmpTo = 0;
+            if(numberOfEmployees.contains("than")){
+                criteria.add(Criteria.where("number_of_employees").gt(10000));
+            }
+            else {
+                String[] splitNum = numberOfEmployees.split("-");
+                numberOfEmpFrom = Integer.parseInt(splitNum[0].trim());
+                numberOfEmpTo = Integer.parseInt(splitNum[1].trim());
+                criteria.add(Criteria.where("number_of_employees").lt(numberOfEmpTo).gt(numberOfEmpFrom));
+            }
+        }
+        if(foundedYear !=null && !foundedYear.isEmpty() && !foundedYear.equals("undefined"))  criteria.add(Criteria.where("founded_year").is(Integer.parseInt(foundedYear)));
+
+        System.out.println("Search Text: "+ search
+                            + "  categoryCode: "+ categoryCode
+                            + "  investedOn: "+ investedOn
+                            + "  tag: "+ tag
+                            + "  fundedBy: "+ fundedBy
+                            + "  numberOfEmployees: "+ numberOfEmployees
+                            + "  foundedYear: "+ foundedYear);
+
+
+        Criteria cri = new Criteria().andOperator(criteria.toArray(new Criteria[0]));
+
+        final Query searchQuery = new Query(cri);
+
+        return mongoTemplate.find(searchQuery, Company.class);
+    }
+
+
 }

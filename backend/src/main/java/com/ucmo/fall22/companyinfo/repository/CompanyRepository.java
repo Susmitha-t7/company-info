@@ -1,13 +1,14 @@
 package com.ucmo.fall22.companyinfo.repository;
 
 import com.ucmo.fall22.companyinfo.model.Company;
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CompanyRepository extends MongoRepository<Company, String> {
+public interface CompanyRepository extends MongoRepository<Company, String>, CompanyCustomRepository {
 
     Optional<Company> findCompanyByName(String name);
     @Query(fields = "{'id' : 1, " +
@@ -22,5 +23,6 @@ public interface CompanyRepository extends MongoRepository<Company, String> {
     List<Company> findAllByOrderByNumberOfEmployeesDesc();
 
     Optional<Company> findById(String Id);
+
 
  }

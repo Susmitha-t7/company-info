@@ -12,4 +12,14 @@ public interface CompanyCustomRepository {
                                                    String tag,
                                                    String investedOn,
                                                    String FundedBy);
+
+    List<Company> findAllCompaniesByFilter(String search,
+                                           String categoryCode,
+                                           String investedOn,
+                                           String tag,
+                                           String fundedBy,
+                                           String numberOfEmployees,
+                                           String foundedYear
+                                           );
+
 }
