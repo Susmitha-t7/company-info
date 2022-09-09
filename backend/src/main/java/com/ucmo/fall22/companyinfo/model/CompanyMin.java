@@ -9,28 +9,15 @@ import java.util.List;
 
 @Data
 @Document(collection = "company")
-public class Company {
+public class CompanyMin {
 
     @Id
     private String id;
 
+    @Field("permalink")
     private String permalink;
     private String name;
 
-    @Field("crunchbase_url")
-    private String crunchbaseUrl;
-
-    @Field("homepage_url")
-    private String homepageUrl;
-
-    @Field("blog_url")
-    private String blogUrl;
-
-    @Field("blog_feed_url")
-    private String blogFeedUrl;
-
-    @Field("twitter_username")
-    private String twitterUsername;
     @Field("category_code")
     private String categoryCode;
 
@@ -43,37 +30,14 @@ public class Company {
     @Field("founded_year")
     private Integer foundedYear;
 
-    @Field("founded_month")
-    private Integer foundedMonth;
-
-    @Field("founded_day")
-    private Integer foundedDay;
-
-    @Field("tag_list")
-    private String tagList;
-    private String description;
-
-    private String overview;
-
     @Field("email_address")
     private String emailAddress;
 
     @Field("phone_number")
     private String phoneNumber;
 
-    @Field(value = "products")
-    private List<NameDepend> products;
 
-    @Field(value = "offices")
-    private List<Office> offices;
-
-    @Field(value = "competitions")
-    private List<Competitor> competitions;
-
-    @Field(value = "investments")
-    private List<Investment> investments;
-
-    public Company(String name,
+    public CompanyMin(String name,
                    String permalink,
                    String categoryCode,
                    Integer numberOfEmployees,

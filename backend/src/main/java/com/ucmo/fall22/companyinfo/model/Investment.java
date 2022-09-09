@@ -1,10 +1,11 @@
 package com.ucmo.fall22.companyinfo.model;
 
+import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Data
 public class Investment {
 
-    private NameDepend company;
-
-    private NameDepend financialOrg;
-
-    private NameDepend person;
+    @Field(value = "funding_round")
+    private FundingRound fundingRound;
 }

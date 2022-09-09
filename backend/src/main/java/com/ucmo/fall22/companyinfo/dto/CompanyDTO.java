@@ -10,6 +10,7 @@ import java.util.List;
 public class CompanyDTO {
     private String id;
     private String name;
+    private String permalink;
     private String totalMoneyRaised;
     private String categoryCode;
     private Integer foundedYear;

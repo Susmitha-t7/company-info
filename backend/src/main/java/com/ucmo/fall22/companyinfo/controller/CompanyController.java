@@ -3,6 +3,7 @@ package com.ucmo.fall22.companyinfo.controller;
 import com.ucmo.fall22.companyinfo.dto.CompanyDTO;
 import com.ucmo.fall22.companyinfo.dto.CompanySummaryDTO;
 import com.ucmo.fall22.companyinfo.model.Company;
+import com.ucmo.fall22.companyinfo.model.CompanyMin;
 import com.ucmo.fall22.companyinfo.repository.CompanyRepository;
 import com.ucmo.fall22.companyinfo.service.CompanyService;
 import org.modelmapper.ModelMapper;
@@ -36,8 +37,8 @@ public class CompanyController {
     @GetMapping("/companies")
     public ResponseEntity<List<CompanyDTO>> getAllCompaniesByNoOfEmployees(){
         try{
-            List<Company> companies;
-            companies = companyService.findAllByOrderByNumberOfEmployeesDesc();
+            List<CompanyMin> companies;
+            companies = companyService.findAll();
             
             if(companies.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -56,19 +57,24 @@ public class CompanyController {
         return modelMapper.map(company, CompanyDTO.class);
     }
 
+    private CompanyDTO convertToDto(CompanyMin company) {
+
+        //company.getProducts().stream().forEach(x-> System.out.println(x.getName()));
+        return modelMapper.map(company, CompanyDTO.class);
+    }
+
     private CompanySummaryDTO convertToOptionalDto(Company company) {
         //company.getProducts().stream().forEach(x-> System.out.println(x.getName()));
-        CompanySummaryDTO toRet = modelMapper.map(company, CompanySummaryDTO.class);
-        toRet.setCompanyDTO(modelMapper.map(company, CompanyDTO.class));
-        return toRet;
+        CompanySummaryDTO toRet;
+        return toRet = modelMapper.map(company, CompanySummaryDTO.class);
     }
 
     //Used when clicking company in search result to get all the Company details
-    @GetMapping("/companies/{id}")
-    public ResponseEntity<CompanySummaryDTO> getCompanyById(@PathVariable("id") String id){
+    @GetMapping("/companies/{name}")
+    public ResponseEntity<CompanySummaryDTO> getCompanyById(@PathVariable("name") String name){
         try{
             CompanySummaryDTO company;
-            company = convertToOptionalDto(companyService.findById(id).orElse(null));
+            company = convertToOptionalDto(companyService.findByPermalink(name).orElse(null));
             return ResponseEntity.ok().body(company);
         } catch(Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

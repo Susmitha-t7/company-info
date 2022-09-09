@@ -21,36 +21,8 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
     }
 
     @Override
-    public List<Company> findCompaniesByProperties(String search,
-                                                   String categoryCode,
-                                                   Integer numberOfEmployees,
-                                                   Integer foundedYear,
-                                                   String tag,
-                                                   String investedOn,
-                                                   String fundedBy) {
-
-        final List<Criteria> criterias = new ArrayList<>();
-        if(search !=null && !search.isEmpty())  criterias.add(Criteria.where("name").regex(search));
-        if(categoryCode !=null && !categoryCode.isEmpty())  criterias.add(Criteria.where("category_code").is(categoryCode));
-        if(tag !=null && !tag.isEmpty())  criterias.add(Criteria.where("tag_list").regex(tag));
-        if(fundedBy !=null && !fundedBy.isEmpty())  {
-            criterias.add(Criteria.where("funding_rounds.investments.company.name").is(fundedBy));
-            criterias.add(Criteria.where("funding_rounds.investments.financial_org.name").is(fundedBy));
-            criterias.add(Criteria.where("funding_rounds.investments.person.name").is(fundedBy));
-        }
-        if(numberOfEmployees !=null)  criterias.add(Criteria.where("number_of_employees").is(numberOfEmployees));
-        if(foundedYear !=null)  criterias.add(Criteria.where("founded_year").is(foundedYear));
-        if(investedOn !=null && !investedOn.isEmpty())  criterias.add(Criteria.where("investments.funding_round.company.name").is(investedOn));
-
-        Criteria criteria = new Criteria().andOperator(criterias.toArray(new Criteria[0]));
-
-        final Query searchQuery = new Query(criteria);
-
-        return mongoTemplate.find(searchQuery, Company.class);
-    }
-
-    @Override
     public List<Company> findAllCompaniesByFilter(String search,
+                                                  String searchStart,
                                                   String categoryCode,
                                                   String investedOn,
                                                   String tag,
@@ -64,6 +36,9 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
         final List<Criteria> criteria = new ArrayList<>();
 
         if(search !=null && !search.isEmpty() && !search.equals("undefined"))  criteria.add(Criteria.where("name").regex(search));
+        else if(searchStart !=null && !searchStart.isEmpty() && !searchStart.equals("undefined")){
+            criteria.add(Criteria.where("name").regex("^" + searchStart));
+        }
         if(categoryCode !=null && !categoryCode.isEmpty() && !categoryCode.equals("undefined"))  criteria.add(Criteria.where("category_code").is(categoryCode));
         if(investedOn !=null && !investedOn.isEmpty() && !investedOn.equals("undefined"))  criteria.add(Criteria.where("investments.funding_round.company.name").is(investedOn));
         if(tag !=null && !tag.isEmpty() && !tag.equals("undefined"))  criteria.add(Criteria.where("tag_list").regex(tag));
@@ -80,22 +55,32 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
                 criteria.add(Criteria.where("number_of_employees").lt(numberOfEmpTo).gt(numberOfEmpFrom));
             }
         }
-        if(foundedYear !=null && !foundedYear.isEmpty() && !foundedYear.equals("undefined"))  criteria.add(Criteria.where("founded_year").is(Integer.parseInt(foundedYear)));
+        if(foundedYear !=null && !foundedYear.isEmpty() && !foundedYear.equals("undefined") && !foundedYear.equals("0"))  criteria.add(Criteria.where("founded_year").is(Integer.parseInt(foundedYear)));
 
         System.out.println("Search Text: "+ search
+                            + "searchStart: "+ searchStart
                             + "  categoryCode: "+ categoryCode
                             + "  investedOn: "+ investedOn
                             + "  tag: "+ tag
                             + "  fundedBy: "+ fundedBy
                             + "  numberOfEmployees: "+ numberOfEmployees
-                            + "  foundedYear: "+ foundedYear);
+                            + "  foundedYear: "+ foundedYear+"Criteria : ");
 
 
+    if(criteria.size()>0){
         Criteria cri = new Criteria().andOperator(criteria.toArray(new Criteria[0]));
 
         final Query searchQuery = new Query(cri);
 
         return mongoTemplate.find(searchQuery, Company.class);
+    }
+
+    else{
+        final Query searchQuery = new Query();
+
+        return mongoTemplate.find(searchQuery, Company.class);
+    }
+
     }
 
 
