@@ -13,5 +13,7 @@ public interface CompanyRepository extends MongoRepository<Company, String>, Com
 
     Optional<Company> findById(String Id);
 
+
+
     Optional<Company> findFirstByPermalink(String name);
  }

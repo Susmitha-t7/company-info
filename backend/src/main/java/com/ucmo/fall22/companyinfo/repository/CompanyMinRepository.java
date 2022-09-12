@@ -23,4 +23,5 @@ public interface CompanyMinRepository extends MongoRepository<CompanyMin, String
     List<CompanyMin> findAllByOrderByNumberOfEmployeesDesc();
 
 
+
 }

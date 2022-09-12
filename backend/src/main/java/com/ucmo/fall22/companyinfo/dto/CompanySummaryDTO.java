@@ -32,11 +32,11 @@ public class CompanySummaryDTO {
     private Integer foundedMonth;
     private Integer foundedDay;
     private String tagList;
-    /*private List<NameDepend> products;
+    private List<NameDepend> products;
     private List<Office> offices;
     private List<Competitor> competitions;
 
-  */
+
     //URLS
     //Address List<Offices>
 }

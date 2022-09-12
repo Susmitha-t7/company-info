@@ -1,6 +1,7 @@
 package com.ucmo.fall22.companyinfo.repository;
 
 import com.ucmo.fall22.companyinfo.model.Company;
+import com.ucmo.fall22.companyinfo.model.CompanyMin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -64,7 +65,7 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
                             + "  tag: "+ tag
                             + "  fundedBy: "+ fundedBy
                             + "  numberOfEmployees: "+ numberOfEmployees
-                            + "  foundedYear: "+ foundedYear+"Criteria : ");
+                            + "  foundedYear: "+ foundedYear+"Criteria : "+criteria);
 
 
     if(criteria.size()>0){
@@ -77,10 +78,16 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
 
     else{
         final Query searchQuery = new Query();
-
         return mongoTemplate.find(searchQuery, Company.class);
     }
 
+    }
+
+    @Override
+    public List<CompanyMin> findAllByPermalink(List<String> name) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("permalink").in(name));
+        return mongoTemplate.find(query, CompanyMin.class);
     }
 
 

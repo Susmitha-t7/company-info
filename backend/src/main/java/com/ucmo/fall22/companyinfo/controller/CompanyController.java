@@ -205,4 +205,23 @@ public class CompanyController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/competitors")
+    public ResponseEntity<List<CompanyDTO>> findAllByPermalink(@RequestParam String[] names) {
+        try{
+
+            System.out.println("Requested::"+Arrays.stream(names).toList());
+            List<CompanyMin> companies;
+            companies = companyService.findAllByPermalink(Arrays.stream(names).toList());
+
+            if(companies.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+            return new ResponseEntity<>(companies.stream()
+                    .map(this::convertToDto)
+                    .collect(Collectors.toList()
+                    ), HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

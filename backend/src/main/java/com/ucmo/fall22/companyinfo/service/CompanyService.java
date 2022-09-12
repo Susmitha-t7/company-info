@@ -29,6 +29,10 @@ public class CompanyService {
         return companyRepository.findById(id);
     }
 
+    public List<CompanyMin> findAllByPermalink(List<String> names) {
+        return new ArrayList<>(companyMinRepository.findAllByPermalink(names).stream().toList());
+    }
+
     public Optional<Company> findByPermalink(String name) {
         return companyRepository.findFirstByPermalink(name);
     }
