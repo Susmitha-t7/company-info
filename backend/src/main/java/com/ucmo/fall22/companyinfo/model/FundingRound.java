@@ -8,8 +8,8 @@ import java.util.List;
 @Data
 public class FundingRound {
 
-    private Integer id;
-
+    @Field(value = "id")
+    private String id;
     @Field(value = "round_code")
     private String roundCode;
 
@@ -35,11 +35,6 @@ public class FundingRound {
     private Integer fundedDay;
     private NameDepend company;
 
-    /*private List<Investment> investmentList;
-
-    private NameDepend company;
-
-    private NameDepend financialOrg;
-
-    private NameDepend person;*/
+    @Field(value = "investments")
+    private List<Investment> investments;
 }

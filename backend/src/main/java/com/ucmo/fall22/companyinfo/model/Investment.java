@@ -8,4 +8,13 @@ public class Investment {
 
     @Field(value = "funding_round")
     private FundingRound fundingRound;
+
+    @Field(value = "company")
+    private NameDepend company;
+
+    @Field(value = "financial_org")
+    private NameDepend financialOrg;
+
+    @Field(value = "person")
+    private Person person;
 }

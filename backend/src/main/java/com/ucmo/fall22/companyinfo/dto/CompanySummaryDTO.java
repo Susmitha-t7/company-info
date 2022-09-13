@@ -1,8 +1,6 @@
 package com.ucmo.fall22.companyinfo.dto;
 
-import com.ucmo.fall22.companyinfo.model.Competitor;
-import com.ucmo.fall22.companyinfo.model.NameDepend;
-import com.ucmo.fall22.companyinfo.model.Office;
+import com.ucmo.fall22.companyinfo.model.*;
 import lombok.Data;
 import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -35,8 +33,9 @@ public class CompanySummaryDTO {
     private List<NameDepend> products;
     private List<Office> offices;
     private List<Competitor> competitions;
-
-
-    //URLS
-    //Address List<Offices>
+    private List<Investment> investments;
+    private List<Acquisition> acquisitions;
+    private Acquisition acquiredBy;
+    private List<FundingRound> fundingRounds;
+    private List<Relationship> relationships;
 }

@@ -73,6 +73,18 @@ public class Company {
     @Field(value = "investments")
     private List<Investment> investments;
 
+    @Field(value = "acquisitions")
+    private List<Acquisition> acquisitions;
+
+    @Field(value = "acquisition")
+    private Acquisition acquiredBy;
+
+    @Field(value = "funding_rounds")
+    private List<FundingRound> fundingRounds;
+
+    @Field(value = "relationships")
+    private List<Relationship> relationships;
+
     public Company(String name,
                    String permalink,
                    String categoryCode,
