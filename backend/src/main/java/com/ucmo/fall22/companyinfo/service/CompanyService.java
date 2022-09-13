@@ -37,7 +37,7 @@ public class CompanyService {
         return companyRepository.findFirstByPermalink(name);
     }
 
-    public List<Company> findAllCompaniesByFilter(Map<String, String> customQuery){
+    public List<CompanyMin> findAllCompaniesByFilter(Map<String, String> customQuery){
         String search = null,
                 searchStart = null,
                 categoryCode = null,

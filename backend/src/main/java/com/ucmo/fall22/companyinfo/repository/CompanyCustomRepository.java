@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CompanyCustomRepository {
 
-    List<Company> findAllCompaniesByFilter(String search,
+    List<CompanyMin> findAllCompaniesByFilter(String search,
                                            String searchStart,
                                            String categoryCode,
                                            String investedOn,

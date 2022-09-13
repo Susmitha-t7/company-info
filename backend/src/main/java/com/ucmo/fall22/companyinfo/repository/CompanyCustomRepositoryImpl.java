@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @Repository
 public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
@@ -22,7 +23,7 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
     }
 
     @Override
-    public List<Company> findAllCompaniesByFilter(String search,
+    public List<CompanyMin> findAllCompaniesByFilter(String search,
                                                   String searchStart,
                                                   String categoryCode,
                                                   String investedOn,
@@ -69,16 +70,17 @@ public class CompanyCustomRepositoryImpl implements CompanyCustomRepository{
 
 
     if(criteria.size()>0){
+        System.out.println("In this");
         Criteria cri = new Criteria().andOperator(criteria.toArray(new Criteria[0]));
 
         final Query searchQuery = new Query(cri);
 
-        return mongoTemplate.find(searchQuery, Company.class);
+        return mongoTemplate.find(searchQuery, CompanyMin.class);
     }
 
     else{
-        final Query searchQuery = new Query();
-        return mongoTemplate.find(searchQuery, Company.class);
+        Query query1 = new Query();
+        return mongoTemplate.find(query1, CompanyMin.class);
     }
 
     }

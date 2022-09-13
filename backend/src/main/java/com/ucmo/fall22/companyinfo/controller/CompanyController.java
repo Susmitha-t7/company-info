@@ -191,8 +191,10 @@ public class CompanyController {
     public ResponseEntity<List<CompanyDTO>> getCompaniesByFilter(@RequestParam Map<String, String> customQuery) {
         try{
             System.out.println(customQuery);
-            List<Company> companies;
+            List<CompanyMin> companies;
             companies = companyService.findAllCompaniesByFilter(customQuery);
+
+
 
             if(companies.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
