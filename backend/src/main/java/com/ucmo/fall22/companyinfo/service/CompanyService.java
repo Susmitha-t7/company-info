@@ -72,4 +72,16 @@ public class CompanyService {
 
     }
 
+    /*
+    public List<News> getNews(String companyName){
+        if(companyName !=null && !companyName.isEmpty() && !companyName.equals("undefined")){
+            return null;
+        }
+        else{
+            return null;
+        }
+    }
+
+     */
+
 }

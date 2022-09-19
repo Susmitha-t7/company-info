@@ -43,6 +43,7 @@ public class Company {
     @Field("founded_year")
     private Integer foundedYear;
 
+
     @Field("founded_month")
     private Integer foundedMonth;
 
@@ -88,7 +89,6 @@ public class Company {
     public Company(String name,
                    String permalink,
                    String categoryCode,
-                   Integer numberOfEmployees,
                    String totalMoneyRaised,
                    Integer foundedYear,
                    String emailAddress,
@@ -97,7 +97,6 @@ public class Company {
         this.name = name;
         this.permalink = permalink;
         this.categoryCode = categoryCode;
-        this.numberOfEmployees = numberOfEmployees;
         this.totalMoneyRaised = totalMoneyRaised;
         this.foundedYear = foundedYear;
         this.emailAddress = emailAddress;

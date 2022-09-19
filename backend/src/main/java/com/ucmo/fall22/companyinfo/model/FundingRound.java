@@ -20,7 +20,7 @@ public class FundingRound {
     private String sourceDescription;
 
     @Field(value = "raised_amount")
-    private Integer raisedAmount;
+    private Long raisedAmount;
 
     @Field(value = "raised_currency_code")
     private String raisedCurrencyCode;
@@ -33,6 +33,8 @@ public class FundingRound {
 
     @Field(value = "funded_day")
     private Integer fundedDay;
+
+    @Field(value = "company")
     private NameDepend company;
 
     @Field(value = "investments")

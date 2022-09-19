@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Data
 public class Investment {
 
-    @Field(value = "funding_round")
-    private FundingRound fundingRound;
+   @Field(value = "funding_round")
+   private FundingRound fundingRound;
 
     @Field(value = "company")
     private NameDepend company;
