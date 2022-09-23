@@ -4,6 +4,7 @@ import com.ucmo.fall22.companyinfo.dto.CompanyDTO;
 import com.ucmo.fall22.companyinfo.dto.CompanySummaryDTO;
 import com.ucmo.fall22.companyinfo.model.Company;
 import com.ucmo.fall22.companyinfo.model.CompanyMin;
+import com.ucmo.fall22.companyinfo.model.News;
 import com.ucmo.fall22.companyinfo.repository.CompanyRepository;
 import com.ucmo.fall22.companyinfo.service.CompanyService;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -223,6 +225,32 @@ public class CompanyController {
                     ), HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/news")
+    public ResponseEntity<?> getNews(){
+        try {
+            String uri = "https://newsapi.org/v2/top-headlines?country=us&sortBy=publishedAt&pageSize=3&category=business&apiKey=c06ecca1df4a417a89f9425f4d714322";
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(uri, String.class);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Error!, Please try again", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/news/{name}")
+    public ResponseEntity<?> getNewsByName(@PathVariable("name") String name){
+        try {
+            String uri = "https://newsapi.org/v2/everything?q="+name+"&sortBy=publishedAt&language=en&pageSize=3&apiKey=c06ecca1df4a417a89f9425f4d714322";
+            RestTemplate restTemplate = new RestTemplate();
+            String result = restTemplate.getForObject(uri, String.class);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Error!, Please try again", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

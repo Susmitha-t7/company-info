@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,5 @@ public interface CompanyMinRepository extends MongoRepository<CompanyMin, String
     List<CompanyMin> findAllByOrderByNumberOfEmployeesDesc();
 
 
-
+    List<CompanyMin> findByNameIn(List<String> companies);
 }
