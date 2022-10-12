@@ -36,6 +36,7 @@ public class CompanyController {
     MongoTemplate mongoTemplate;
 
     //Returns all the companies order by Number Of Employees
+    //Angular service: baseUrl
     @GetMapping("/companies")
     public ResponseEntity<List<CompanyDTO>> getAllCompaniesByNoOfEmployees(){
         try{
@@ -72,6 +73,7 @@ public class CompanyController {
     }
 
     //Used when clicking company in search result to get all the Company details
+    // Angular service: companyDetailURL
     @GetMapping("/companies/{name}")
     public ResponseEntity<CompanySummaryDTO> getCompanyById(@PathVariable("name") String name){
         try{
@@ -84,6 +86,7 @@ public class CompanyController {
     }
 
     // Filter, CategoryCode values
+    // Angular service: categoryCode
     @GetMapping("/categoryCode")
     public ResponseEntity<List<String>> getAllCategoryCodes(){
         try{
@@ -99,6 +102,7 @@ public class CompanyController {
     }
 
     // Filter, tag values
+    // Angular service: tagURL
     @GetMapping("/tags")
     public ResponseEntity<List<String>> getAllTags(){
         try{
@@ -123,72 +127,10 @@ public class CompanyController {
         }
     }
 
-    @GetMapping("/tags/{name}")
-    public ResponseEntity<List<String>> getTagsBySearch(@PathVariable("name") String name){
-        try{
-            List<String> tagLists;
-            tagLists = mongoTemplate.query(Company.class).distinct("tagList").as(String.class).all();
 
-            Set<String> distinctHash = new HashSet<>();
-            for(String str: tagLists){
-                if(str != null && !str.isEmpty())
-                {
-                    List<String> strList = Arrays.stream(str.split(",")).map(String::trim).toList();
-                    distinctHash.addAll(strList);
-                }
-            }
-            tagLists = new ArrayList<>(distinctHash);
-
-            List<String> tagSearch = tagLists
-                    .stream()
-                    .filter(a -> a.toLowerCase().contains(name.toLowerCase())).toList();
-            if(tagSearch.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-            return new ResponseEntity<>(tagSearch.stream().limit(20).toList(), HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Filter, Not sure where to use, returns all company name values
-    @GetMapping("/companyName")
-    public ResponseEntity<List<String>> getAllCompanyNames(){
-        try{
-            List<String> companyNames;
-            companyNames = mongoTemplate.query(Company.class).distinct("name").as(String.class).all();
-
-            if(companyNames.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-            return new ResponseEntity<>(companyNames, HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    //Used in funded by and Invested On search box. Returns the companies with %name%
-    @GetMapping("/companyName/{name}")
-    public ResponseEntity<List<String>> getAllCompanyNamesByName(@PathVariable("name") String name){
-        try{
-            List<String> companyNames;
-            companyNames = mongoTemplate.query(Company.class)
-                    .distinct("name")
-                    .as(String.class)
-                    .all();
-
-
-            List<String> companySearchNames = companyNames
-                                                .stream()
-                                                .filter(a -> a.toLowerCase().contains(name.toLowerCase()))
-                                                .collect(Collectors.toList());
-            if(companySearchNames.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-            return new ResponseEntity<>(companySearchNames, HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     // return all company details as per the filter values and search value
+    // Angular service: customFilter
     @RequestMapping(method = RequestMethod.GET, value = "/company/custom")
     public ResponseEntity<List<CompanyDTO>> getCompaniesByFilter(@RequestParam Map<String, String> customQuery) {
         try{
@@ -209,6 +151,7 @@ public class CompanyController {
         }
     }
 
+    // Angular service: competitorURL
     @RequestMapping(method = RequestMethod.GET, value = "/competitors")
     public ResponseEntity<List<CompanyDTO>> findAllByPermalink(@RequestParam String[] names) {
         try{
@@ -228,6 +171,7 @@ public class CompanyController {
         }
     }
 
+    // Angular Service: newsURL
     @GetMapping("/news")
     public ResponseEntity<?> getNews(){
         try {
@@ -241,6 +185,7 @@ public class CompanyController {
         }
     }
 
+    // // Angular Service: newsURL
     @GetMapping("/news/{name}")
     public ResponseEntity<?> getNewsByName(@PathVariable("name") String name){
         try {

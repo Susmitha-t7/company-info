@@ -2,13 +2,14 @@ package com.ucmo.fall22.companyinfo.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
 @Data
-@Document(collection = "company")
+@Document(collection = "Company")
 public class CompanyMin {
 
     @Id
@@ -16,6 +17,7 @@ public class CompanyMin {
 
     @Field("permalink")
     private String permalink;
+
     private String name;
 
     @Field("category_code")

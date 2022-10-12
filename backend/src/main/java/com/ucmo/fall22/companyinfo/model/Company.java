@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.List;
 
 @Data
-@Document(collection = "company")
+@Document(collection = "Company")
 public class Company {
 
     @Id
